@@ -1,0 +1,213 @@
+  
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./styles.css">
+	<link rel="shortcut icon" href="/purdue-tt/favicon.ico" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<title> Purdue Table Tennis </title>
+</head>
+<body>
+<div id="center">
+  <img id="logo" src="./icon.ico" onclick="startRecognition()"/>
+  <h1> Hello! What residence halls are you looking at today? </h1>
+  <h2><span id="interim_span" class="speechrec"></span></h2>
+  <h2><span id="final_span" class="speechrec"></span></h2>
+  <script src="date.js"> </script>
+  <p id="date-time"></p>
+  <h2> <img src="logo6.jpg" style="width:1500px;height:122px;"> </img></h2>
+<video id="bgvid" autoplay poster=bg.jpg>
+<source src="Presentation1.mp4" type="video/mp4" />
+
+</video>
+<div class="dropdown">
+	<script>
+		if(!('webkitSpeechRecognition' in window)) {
+    alert("Your browser doesn't support speech recognition");
+} else {
+    var recognition = new webkitSpeechRecognition();
+
+    recognition.interimResults = true;
+    recognition.onstart = function() {
+    }
+
+    recognition.onresult = function(event) {
+        var interim_transcript = '';
+        for(var i = event.resultIndex; i < event.results.length; i++) {
+            if(event.results[i].isFinal) {
+                final_transcript += event.results[i][0].transcript;
+            } else {
+                interim_transcript += event.results[i][0].transcript;
+            }
+        }
+        final_span.innerHTML = final_transcript;
+        interim_span.innerHTML = interim_transcript;
+    }
+
+    recognition.onerror = function(event) {
+    }
+
+    recognition.onend = function() {
+        var audio = document.createElement('audio');
+        audio.src = './Error.mp3';
+        console.log("On End!");
+        final_transcript = final_transcript.toLowerCase();
+        final_transcript += " ";
+        var startingIndex=0;
+        var toPlay=0;
+        var halls = ["cary","earhart","harrison","hillenbrand","honors","mccutcheon","owen","shreve","tarkington","talkington","wiley"];
+        var currentIndex=0;
+        while(currentIndex < halls.length) {
+          if(final_transcript.includes(halls[currentIndex])){
+            toPlay = 1;
+            if(currentIndex >= 9) {
+              imageArray(currentIndex-1);
+            } else {
+              imageArray(currentIndex);
+            }
+            break;
+          }
+          currentIndex++;
+        }
+        if(toPlay == 0) {
+            final_span.innerHTML = "I'm not sure I understand";
+            audio.play();
+            //recognition.start();
+            console.log("Audio Played!");
+          }
+    }
+
+    function startRecognition(event) {
+        final_transcript = '';
+        var audio = document.createElement('audio');
+        audio.src = './Start.mp3';
+        audio.play();
+        recognition.lang = 'en-US';
+        recognition.start();
+    }
+    function stopRecognition(event) {
+        recognition.stop();
+    }
+}
+		</script>
+
+  <select id="select">
+    <option value="0" onclick="imageArray(0)">Cary Quadrangle</a>
+    <option value="1" onclick="imageArray(1)">Earhart Hall</a>
+    <option value="2" onclick="imageArray(2)">Harrison Hall</a>
+    <option value="3" onclick="imageArray(3)">Hillenbrand Hall</a>
+    <option value="4" onclick="imageArray(4)">Honors College and Residences</a>
+    <option value="5" onclick="imageArray(5)">McCutcheon Hall</a>
+    <option value="6" onclick="imageArray(6)">Owen Hall</a>
+    <option value="7" onclick="imageArray(7)">Shreve Hall</a>
+    <option value="8" onclick="imageArray(8)">Tarkington Hall</a>
+	<option value="9" onclick="imageArray(9)">Wiley Hall</a>
+  </select>
+  <button id="go" onclick="getValue()">GO</button>
+</div>
+</div>
+<div id="loader">
+</div>
+<div id="my_camera" style="width:50px; height:50px;"></div>
+<div id="my_result"></div>
+<script src="webcam.min.js">
+</script>
+<script>
+	function getValue() {
+		var selectBox = document.getElementById("select");
+		//(selectBox.options[selectBox.selectedIndex].value)
+		imageArray(selectBox.options[selectBox.selectedIndex].value)
+		
+	}
+</script>
+<script type="text/javascript" >
+
+var hallAvail = [0,0,0,0,0,0,0,0,0,0];
+Webcam.attach('#my_camera');
+function imageArray(index) 
+{		
+		var dataUri,bb,blob;
+		var byteCharacters;
+    	var params = 
+    	{
+            "visualFeatures": "Categories,Description,Color",
+            "details": "",
+            "language": "en",
+        };
+   		Webcam.snap(function(data_uri) 
+   		{
+        	dataUri = data_uri.split(",")[1];
+        	byteCharacters = atob(dataUri);
+    		var len = byteCharacters.length;
+    		var bytes = new Uint8Array( len );
+    		for (var i = 0; i < len; i++)        
+    		{
+        		bytes[i] = byteCharacters.charCodeAt(i);
+    		}
+    		blob = new Blob([bytes], {type: "application/octet-stream"});
+        });
+        var xhr = new XMLHttpRequest();
+		xhr.onload = function(data)
+		{
+			console.log(xhr.response);
+			//alert(xhr.response["description"]["tags"]);
+			var counter = 0;
+           // console.log(data["description"]["tags"]);
+        	for(var i = 0; i < xhr.response["description"]["tags"].length ; i++)
+        	{
+        		if(xhr.response["description"]["tags"][i]==="people" || xhr.response["description"]["tags"][i]==="racket" || xhr.response["description"]["tags"][i]==="ball" || xhr.response["description"]["tags"][i]==="playing" || xhr.response["description"]["tags"][i]==="person")
+        			{
+        			console.log("Tag no:"+i);
+        			counter = counter+1;
+        			}
+			}
+			//counter = 2;
+        	if(counter>=3)
+        	{
+				hallAvail[index]=1;
+				console.log('/purdue-tt/' + index + 'n.html');
+				location = '/purdue-tt/' + index + 'n.html';
+        	}
+        	else
+        	{
+				hallAvail[index]=0;
+				console.log('/purdue-tt/' + index + '.html');
+        		location = '/purdue-tt/' + index + '.html';
+        	}
+        };
+        	xhr.responseType = 'json';
+			xhr.open('POST', 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze?'+$.param(params));
+			xhr.setRequestHeader("Content-Type", "application/octet-stream");
+			xhr.setRequestHeader("Ocp-Apim-Subscription-Key", '36918d1d47d94191bd4e51bee91622b7');
+			xhr.send(blob);
+			
+			
+}
+</script>
+<div id="my_camera" style="width:50px; height:50px;"></div>
+<div id="my_result"></div>
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+</body>
+</html>
