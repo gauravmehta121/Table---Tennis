@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Grand+Hotel|Righteous');
+#date-time {
+  font-size: 20px;
+  color: rgb(40,50,79);
+  position: absolute;
+  left: 1250px;
+  font-family: grand hotel;
+  z-index: 1000;
+position: relative;
+}
+button{
+  width: 110px;
+  height: 50px;
+  font-family: righteous;
+  font-size: 20px;
+  position: absolute;
+  top: 500px;
+  left: 650px;
+  color: #F6D654;
+  background-color: black;
+}
+ img{
+   position: absolute;
+   z-index: -1;
+   min-height: 750px;
+   height: auto;
+   width: auto;
+ }
+ h1 {
+   position: absolute;
+   left: 300px;
+   top: 320px;
+   font-family: righteous;
+   font-size: 50px;
+   color: #FFFFFF;
+ }
+ h3{
+   position: absolute;
+   left: 385px;
+   top: 378px;
+   font-family: righteous;
+   font-size: 40px;
+   color: #F6D654;
+ }
+</style>
+</head>
+<body>
+  <button onclick="goBack()">Go Back</button>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+  <script src="date.js"> </script>
+  <p id="date-time"></p>
+  <h1> HONORS HALL AND RESIDENCES </h1>
+  <h3> Table Tennis courts not available! </h3>
+  <h2> <img src="honors.jpg" style="width:1500px;height:122px;"> </img></h2>
+</body>
+</html>
