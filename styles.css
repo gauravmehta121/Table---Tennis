@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif|Grand+Hotel|Lora');
+@import url('https://fonts.googleapis.com/css?family=Allura|Grand+Hotel|Righteous');
+body{
+  background-color: rgb(40, 50, 79);
+}
+
+.speechrec {
+  font-family: bree serif;
+  position: absolute;
+  color: white;
+  font-size: 27px;
+  left: 480px;
+  top: 490px;
+}
+select{
+  top: 500px;
+  background: rgb(189, 81, 121);
+  border: none;
+  font-size: 20px;
+  height: 29px;
+  padding: 5px; /* If you add too much padding here, the options won't show in IE */
+  width: 268px;
+  font-family: righteous;
+  color: rgb(253, 249, 227);
+}
+h1 {
+  position: absolute;
+  left: 300px;
+  top: 250px;
+  font-family: grand hotel;
+  font-size: 50px;
+  color: white;
+}
+/*#loader {
+  position: absolute;
+  border: 13px solid rgb(40,50,79);
+  border-radius: 100%;
+  border-top: 15px solid #ff6666;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1.2s linear infinite;
+  top: 1100px;
+  left: 650px;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}*/
+
+#go{
+  font-family: righteous;
+
+}
+#logo{
+  top: 385px;
+  left: 500px;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+}
+#date-time {
+  font-size: 20px;
+  color: rgb(40,50,79);
+  position: absolute;
+  left: 1250px;
+  font-family: grand hotel;
+  z-index: 1000;
+position: relative;
+}
+video#bgvid{
+min-width: 90%;
+min-height: 50%;
+max-height: 900px;
+width: auto;
+height: auto;
+background: "bg.jpg";
+background-size:cover;
+}
+img{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+}
+#h2 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+}
+.dropbtn {
+    background-color: rgb(189, 81, 121);
+    color: rgb(253, 249, 227);
+    font-family: Bree Serif;
+    padding: 16px;
+    font-size: 27px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #ff6666;
+}
+
+.dropdown {
+    position: absolute;
+    top: 400px;
+    left: 575px;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 170px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    font-family: Bree Serif;
+    padding: 16px 16px;
+    text-decoration: none;
+    display: block;
+}
+#center {
+    height: 1500px;
+    width:100%;
+
+}
+.test-pic {
+    height: 500px;
+    width: 500px;
+    position: absolute;
+    top: 1000px;
+}
+
+# {
+    height: 75%;
+    width:100%;
+}
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
